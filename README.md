@@ -1,3 +1,69 @@
+# Automation of Job Application Registrations with n8n
+
+This project automates the extraction and registration of job application submissions received by email from platforms like InfoJobs and LinkedIn, storing the information in a Notion database. The workflow is managed with **n8n** and deployed using **Docker Compose**.
+
+---
+
+## 📦 Contents
+
+- n8n workflow that captures unread emails from InfoJobs and LinkedIn.  
+- Automatic extraction of key data: position, company, and platform.  
+- Automatic registration in Notion database.  
+- Deployment with Docker Compose for local or server execution.  
+![n8n-Image](./capturas/Imagen-Flujo.png)
+
+---
+
+## ⚙️ Requirements
+
+- Docker and Docker Compose installed.  
+- Notion account with database prepared and shared with the n8n integration.  
+- IMAP credentials for the email receiving the job application notifications.  
+- `.env` file with sensitive variables (user, password, timezone).
+
+---
+
+## 🚀 Deployment
+
+1. Clone the repository.
+
+2. Create a `.env` file with the following content:
+
+   ```env
+   TZ=Europe/Madrid
+   N8N_BASIC_AUTH_ACTIVE=true
+   N8N_BASIC_AUTH_USER=your_username
+   N8N_BASIC_AUTH_PASSWORD=your_secure_password
+
+3. Run the container with Docker Compose:
+
+4. Access n8n at `http://localhost:5678` and configure your IMAP and Notion credentials.
+
+5. Activate the workflow to start it running automatically.
+
+---
+
+## 🛡 Security
+
+- Do not include credentials in the repository.  
+- Use the `.env` file and ensure it is included in `.gitignore`.  
+- Set a strong password for n8n basic authentication.
+
+---
+
+## 📄 Usage
+
+- The workflow checks new emails from InfoJobs and LinkedIn.  
+- Extracts relevant data (position, company, platform).  
+- Automatically adds a record to the Notion database.  
+- You can modify the workflow to adapt platforms or data.
+
+---
+
+## 🤝 Contributions
+
+Contributions, suggestions, and improvements are welcome. Feel free to open issues or pull requests.
+
 # Automatización de Inscripciones a Ofertas de Trabajo con n8n
 
 Este proyecto automatiza la extracción y registro de inscripciones a ofertas de trabajo recibidas por correo electrónico desde plataformas como InfoJobs y LinkedIn, almacenando la información en una base de datos Notion. El flujo está gestionado con **n8n** y desplegado mediante **Docker Compose**.
