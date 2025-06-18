@@ -10,7 +10,7 @@ Este proyecto automatiza la extracción y registro de inscripciones a ofertas de
 - Extracción automática de datos clave: puesto, empresa y plataforma.  
 - Registro automático en base de datos Notion.  
 - Despliegue con Docker Compose para ejecución local o en servidor.
-![Imagen-n8n](./capturas/Screenshot_1.png)
+![Imagen-n8n](./capturas/Imagen-Flujo.png)
 
 ---
 
