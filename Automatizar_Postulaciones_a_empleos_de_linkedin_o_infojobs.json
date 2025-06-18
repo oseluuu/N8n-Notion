@@ -1,0 +1,137 @@
+{
+  "name": "Automatizar Postulaciones a empleos de linkedin o infojobs",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\", [ \"OR\", [\"FROM\", \"jobs-noreply@linkedin.com\"], [\"SUBJECT\", \"Te has inscrito a una oferta\"]]]"
+        }
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "31ade2d6-81df-4798-beee-07383f5533f1",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "2PdgcUOwcUcVoUpR",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e855342-3622-4241-b526-ee015d43bc47",
+              "name": "Puesto",
+              "value": "={{\n  $json[\"textPlain\"]?.match(/Te has inscrito en la oferta (.*?) Puedes seguir/i)?.[1]?.replace(/\\s+/g, \" \").trim() || \n  $json[\"textHtml\"]?.match(/<a[^>]*>([^<]+)<\\/a>/i)?.[1]?.trim().replace(/\\s+/g, \" \") ||\n\n  \"No detectado\"\n}}\n\n",
+              "type": "string"
+            },
+            {
+              "id": "4535868a-0815-4b26-bf24-dd023d205b30",
+              "name": "Empresa",
+              "value": "={{ \n  // InfoJobs\n  $json[\"textHtml\"]?.match(/Y\\s+([\\wÁÉÍÓÚÑáéíóúñ\\s\\.,&\\-]+?)\\s+te ha dejado/i)?.[1]?.trim() || \n  $json[\"textPlain\"].match(/solicitud a (.*)/i)?.[1]?.split(\"\\n\")[0]?.trim() || \n  $json[\"textHtml\"]?.match(/Y\\s+([A-ZÁÉÍÓÚÑ&\\s\\-]+)\\s+te ha dejado/i)?.[1]?.trim() || \n// LinkedIn\n   $json[\"textHtml\"]?.match(/solicitud a\\s+(.*?)\\./i)?.[1]?.trim() ||\n \n  \"Desconocida\" \n}}\n",
+              "type": "string"
+            },
+            {
+              "id": "79822535-3352-438e-b303-f956b24f5bef",
+              "name": "Plataforma",
+              "value": "={{    $json[\"from\"]?.includes(\"linkedin.com\") ? \"LinkedIn\" :   $json[\"from\"]?.includes(\"infojobs.net\") ? \"InfoJobs\" :   \"Desconocido\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "5646d007-456c-4fca-840b-da885558fd8c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "215e4d64-ada9-805b-a381-c5abe085d877",
+          "mode": "list",
+          "cachedResultName": "Estados de inscripciones a ofertas de trabajo",
+          "cachedResultUrl": "https://www.notion.so/215e4d64ada9805ba381c5abe085d877"
+        },
+        "title": "={{$json[\"Puesto\"]}}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Empresa|rich_text",
+              "textContent": "={{ $json[\"Empresa\"] }}"
+            },
+            {
+              "key": "Plataforma|rich_text",
+              "textContent": "={{ $json[\"Plataforma\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "d1797abd-8f11-4192-acc7-babde05b9af0",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "yKlqoxiJtPbncma7",
+          "name": "Notion account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fb68fa00-e5bc-4cdc-985d-d5efd16ae755",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed7451593ae41ac9e2fa605de7f943a70a9b2a2891a6ca854fd9945c1bb573a4"
+  },
+  "id": "SX8EIHwQ8mozCq9s",
+  "tags": []
+}
