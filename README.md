@@ -42,6 +42,9 @@ This project automates the extraction and registration of job application submis
 5. Activate the workflow to start it running automatically.
 
 ---
+⚠️ **Note:** This workflow relies on keyword-based extraction and may not work correctly for emails in other languages or from different platforms. Adaptations might be necessary to support additional languages or sources.
+![Imagen-n8n](./capturas/filtrado.png)
+
 
 ## 🛡 Security
 
@@ -108,6 +111,9 @@ Este proyecto automatiza la extracción y registro de inscripciones a ofertas de
 5. Activa el flujo para que comience a funcionar automáticamente.
 
 ---
+⚠️ **Note:** Este flujo de trabajo se basa en la extracción de palabras clave y podría no funcionar correctamente con correos electrónicos en otros idiomas o plataformas. Podrían ser necesarias adaptaciones para admitir otros idiomas o fuentes.
+![Imagen-n8n](./capturas/filtrado.png)
+
 
 ## 🛡 Seguridad
 
