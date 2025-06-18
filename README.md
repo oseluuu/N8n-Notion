@@ -112,6 +112,7 @@ Este proyecto automatiza la extracción y registro de inscripciones a ofertas de
 
 ---
 ⚠️ **Note:** Este flujo de trabajo se basa en la extracción de palabras clave y podría no funcionar correctamente con correos electrónicos en otros idiomas o plataformas. Podrían ser necesarias adaptaciones para admitir otros idiomas o fuentes.
+
 ![Imagen-n8n](./capturas/filtrado.png)
 
 
